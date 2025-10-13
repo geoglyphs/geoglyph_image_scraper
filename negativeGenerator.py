@@ -66,10 +66,15 @@ def generate_negative_coordinates(df):
     return neg_df
 
 
-def download_negative_images(df):
+def download_negative_images(df, max_images=1500):
     os.makedirs(IMAGE_OUTPUT_FOLDER, exist_ok=True)
+    count = 0
 
     for _, row in df.iterrows():
+        if count >= max_images:
+            print(f"Reached {max_images} images. Stopping.")
+            break
+
         lat, lon = row["lat"], row["lon"]
         orig_code = row["orig_code"]
 
@@ -82,15 +87,15 @@ def download_negative_images(df):
             print(f"Failed to download ({lat}, {lon}): {e}")
             continue
 
-
         if has_low_texture(img):
-            print(f"Skipped ({lat:.3f}, {lon:.3f}) — low texture ")
+            print(f"Skipped ({lat:.3f}, {lon:.3f}) — low texture")
             continue
 
         out_name = f"{IMAGE_OUTPUT_FOLDER}negative_{orig_code}_{lat:.3f}_{lon:.3f}.png"
         img.save(out_name)
         print(f"Saved {out_name}")
 
+        count += 1
 
 # MAIN
 

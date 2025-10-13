@@ -9,9 +9,11 @@ from v2gmapDownloader import GoogleMapDownloader, GoogleMapsLayers
 EXCEL_PATH = "amazon_geoglyphs.xlsx"
 OUTPUT_CSV = "negative_samples.csv"
 ZOOM_LEVEL = 20  # same zoom level used to generate positives
-OFFSET_RANGE = 0.03  # degrees of lat/lon to shift
+OFFSET_RANGE = 0.003  # degrees of lat/lon to shift
+OFFSET_RANGE = float(OFFSET_RANGE)
 NUM_OFFSETS_PER_SITE = 1  # how many negatives per geoglyph
-DISTANCE_THRESHOLD = 0.01  # minimum distance (deg) to avoid overlap
+DISTANCE_THRESHOLD = 0.001  # minimum distance (deg) to avoid overlap
+DISTANCE_THRESHOLD = float(DISTANCE_THRESHOLD)
 IMAGE_OUTPUT_FOLDER = "negatives/"
 EDGE_DENSITY_THRESHOLD = 0.01  # threshold for texture filtering, feel free to adjust
 

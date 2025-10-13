@@ -65,7 +65,6 @@ def generate_negative_coordinates(df):
     print(f"Saved {len(neg_df)} negative samples to {OUTPUT_CSV}")
     return neg_df
 
-
 def download_negative_images(df, max_images=1500):
     os.makedirs(IMAGE_OUTPUT_FOLDER, exist_ok=True)
     count = 0
@@ -87,16 +86,22 @@ def download_negative_images(df, max_images=1500):
             print(f"Failed to download ({lat}, {lon}): {e}")
             continue
 
-        if has_low_texture(img):
-            print(f"Skipped ({lat:.3f}, {lon:.3f}) — low texture")
-            continue
+        try:
+            if has_low_texture(img):
+                print(f"Skipped ({lat:.3f}, {lon:.3f}) — low texture")
+                continue
 
-        out_name = f"{IMAGE_OUTPUT_FOLDER}negative_{orig_code}_{lat:.3f}_{lon:.3f}.png"
-        img.save(out_name)
-        print(f"Saved {out_name}")
+            out_name = (
+                f"{IMAGE_OUTPUT_FOLDER}negative_{orig_code}_{lat:.3f}_{lon:.3f}.png"
+            )
+            img.save(out_name)
+            print(f"Saved {out_name}")
+        finally:
+            del img  # remove reference to large image object
+            gc.collect()
 
         count += 1
-
+        
 # MAIN
 
 def main():

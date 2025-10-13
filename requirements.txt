@@ -1,5 +1,6 @@
 pandas
-openpyxl
-opencv-python-headless
 numpy
+openpyxl
 pillow
+opencv-python-headless
+requests

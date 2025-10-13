@@ -2,4 +2,3 @@ pandas
 openpyxl
 opencv-python-headless
 numpy
-v2gmapDownloader

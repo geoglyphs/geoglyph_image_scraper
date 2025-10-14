@@ -109,8 +109,13 @@ def main():
     # convert lat/lon to numeric
     df["lat"] = pd.to_numeric(df["lat"], errors='coerce')
     df["lon"] = pd.to_numeric(df["lon"], errors='coerce')
+
+    # how many images do you want?
+    image_limit = 1500;
+    
     neg_df = generate_negative_coordinates(df)
-    download_negative_images(neg_df)
+    neg_df = neg_df.sample(n=min(len(neg_df), image_limit))
+    download_negative_images(neg_df, image_limit)
 
 
 if __name__ == "__main__":
